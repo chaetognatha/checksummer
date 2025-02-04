@@ -18,6 +18,13 @@ fn main() {
             let my_hash = my_collection[0];
             let my_path = Path::new(my_collection[1]);
             if let Some(text_path) = my_path.to_str(){
+            match my_path.exists() {
+                true => (),
+                false => {
+                    writeln!(output, "{}    ERROR: FILE NOT FOUND", text_path).unwrap();
+                    continue;
+                }
+            }
             let digest = hash_file(my_path, checksums::Algorithm::MD5).to_lowercase();
             if my_hash == digest {
                 writeln!(output, "{}    OK", text_path).unwrap();
